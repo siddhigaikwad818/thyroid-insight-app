@@ -8,16 +8,16 @@ import { saveScreening } from "@/lib/screening-session";
 export const Route = createFileRoute("/_authenticated/screening")({
   head: () => ({
     meta: [
-      { title: "Patient screening form — ThyroCare AI" },
+      { title: "Patient screening — ThyroCare" },
       {
         name: "description",
         content:
           "Enter age, sex, thyroid lab values (TSH, T3, TT4, T4U, FTI) and a symptom description to get an educational thyroid pattern screening.",
       },
-      { property: "og:title", content: "Patient screening form — ThyroCare AI" },
+      { property: "og:title", content: "Patient screening — ThyroCare" },
       {
         property: "og:description",
-        content: "Enter thyroid test values and symptoms to run the ThyroCare AI screening model.",
+        content: "Enter thyroid test values, clinical history, and symptoms for screening.",
       },
     ],
   }),

@@ -9,13 +9,13 @@ import insights from "@/ml/insights.json";
 export const Route = createFileRoute("/_authenticated/result")({
   head: () => ({
     meta: [
-      { title: "Screening result — ThyroCare AI" },
+      { title: "Screening result — ThyroCare" },
       {
         name: "description",
         content:
-          "ThyroCare AI screening result: predicted thyroid pattern with probabilities, extracted symptom keywords and an explanation of the contributing values.",
+          "Thyroid screening result with probabilities, extracted symptoms, and next-step guidance.",
       },
-      { property: "og:title", content: "Screening result — ThyroCare AI" },
+      { property: "og:title", content: "Screening result — ThyroCare" },
       {
         property: "og:description",
         content: "Predicted thyroid pattern with confidence, symptom keywords and explanation.",
@@ -268,23 +268,10 @@ export default function ResultPage() {
         </section>
       </div>
 
-      <section className="card-surface mt-6 p-6">
-        <h2 className="text-xl font-semibold">What to do next</h2>
-        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground">
-          <li>
-            • Take the original lab report and this symptom list to a physician or endocrinologist —
-            they interpret results together with examination and history.
-          </li>
-          <li>
-            • A single blood panel is never enough: thyroid results change with illness, pregnancy,
-            medication and time of day.
-          </li>
-          <li>
-            • On held-out test data this model reaches {(insights.test.accuracy * 100).toFixed(1)}%
-            accuracy and a macro F1 of {insights.test.macroF1.toFixed(3)}, so mistakes do happen —
-            especially for the rare hyperthyroid class.
-          </li>
-        </ul>
+      <section className="mt-6 grid gap-6 lg:grid-cols-3">
+        <div className="card-surface p-6"><h2 className="text-xl font-semibold">Doctor and testing</h2><ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground"><li>• Arrange a clinician review within 1–2 weeks for a possible abnormal pattern; sooner if symptoms are worsening.</li><li>• Ask about repeat TSH with free T4, and sometimes free T3 or thyroid antibodies.</li><li>• If pregnant or recently postpartum, contact the obstetric or thyroid care team promptly.</li><li>• Once treatment is started or changed, thyroid blood tests are commonly repeated in 4–8 weeks; stable treatment is often checked yearly.</li></ul></div>
+        <div className="card-surface p-6"><h2 className="text-xl font-semibold">Food and precautions</h2><ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground"><li>• Eat a balanced diet; no food or supplement can confirm or cure a thyroid disorder.</li><li>• Avoid kelp, seaweed, or high-dose iodine supplements unless a clinician recommends them.</li><li>• Tell the clinician about biotin supplements because they can affect thyroid test results.</li><li>• If taking levothyroxine, take it consistently on an empty stomach and separate calcium or iron by at least 4 hours.</li><li>• Limit caffeine if it worsens palpitations, tremor, or anxiety.</li></ul></div>
+        <div className="card-surface p-6"><h2 className="text-xl font-semibold">Get urgent help</h2><ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground"><li>• Seek emergency care for confusion, collapse, very high fever, severe breathing trouble, or a very fast or irregular heartbeat.</li><li>• If taking an antithyroid medicine, fever, mouth ulcers, or a severe sore throat needs urgent medical advice and a blood test.</li><li>• New vision changes, severe eye pain, or marked eye swelling needs urgent assessment.</li></ul></div>
       </section>
 
       <div className="mt-6">

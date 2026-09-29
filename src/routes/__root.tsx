@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ThyroCare AI" },
+      { title: "ThyroCare" },
       {
         name: "description",
         content: "Secure thyroid screening and result guidance.",

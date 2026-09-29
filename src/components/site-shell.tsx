@@ -43,7 +43,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 to={item.to}
                 className="rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
                 activeProps={{ className: "rounded-lg px-3 py-2 bg-secondary text-secondary-foreground" }}
-                activeOptions={{ exact: item.to === "/" }}
+                activeOptions={{ exact: true }}
               >
                 {item.label}
               </Link>
