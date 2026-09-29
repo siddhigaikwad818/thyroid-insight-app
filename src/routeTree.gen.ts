@@ -10,63 +10,74 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as InsightsRouteImport } from './routes/insights'
-import { Route as ResultRouteImport } from './routes/result'
-import { Route as ScreeningRouteImport } from './routes/screening'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedResultRouteImport } from './routes/_authenticated/result'
+import { Route as AuthenticatedScreeningRouteImport } from './routes/_authenticated/screening'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InsightsRoute = InsightsRouteImport.update({
-  id: '/insights',
-  path: '/insights',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResultRoute = ResultRouteImport.update({
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedResultRoute = AuthenticatedResultRouteImport.update({
   id: '/result',
   path: '/result',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ScreeningRoute = ScreeningRouteImport.update({
+const AuthenticatedScreeningRoute = AuthenticatedScreeningRouteImport.update({
   id: '/screening',
   path: '/screening',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/insights': typeof InsightsRoute
-  '/result': typeof ResultRoute
-  '/screening': typeof ScreeningRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/result': typeof AuthenticatedResultRoute
+  '/screening': typeof AuthenticatedScreeningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/insights': typeof InsightsRoute
-  '/result': typeof ResultRoute
-  '/screening': typeof ScreeningRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/result': typeof AuthenticatedResultRoute
+  '/screening': typeof AuthenticatedScreeningRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/insights': typeof InsightsRoute
-  '/result': typeof ResultRoute
-  '/screening': typeof ScreeningRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/result': typeof AuthenticatedResultRoute
+  '/_authenticated/screening': typeof AuthenticatedScreeningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/insights' | '/result' | '/screening'
+  fullPaths: '/' | '/reset-password' | '/result' | '/screening'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/insights' | '/result' | '/screening'
-  id: '__root__' | '/' | '/insights' | '/result' | '/screening'
+  to: '/' | '/reset-password' | '/result' | '/screening'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/reset-password'
+    | '/_authenticated/result'
+    | '/_authenticated/screening'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  InsightsRoute: typeof InsightsRoute
-  ResultRoute: typeof ResultRoute
-  ScreeningRoute: typeof ScreeningRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,35 +89,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/insights': {
-      id: '/insights'
-      path: '/insights'
-      fullPath: '/insights'
-      preLoaderRoute: typeof InsightsRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/result': {
-      id: '/result'
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/result': {
+      id: '/_authenticated/result'
       path: '/result'
       fullPath: '/result'
-      preLoaderRoute: typeof ResultRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedResultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/screening': {
-      id: '/screening'
+    '/_authenticated/screening': {
+      id: '/_authenticated/screening'
       path: '/screening'
       fullPath: '/screening'
-      preLoaderRoute: typeof ScreeningRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedScreeningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedResultRoute: typeof AuthenticatedResultRoute
+  AuthenticatedScreeningRoute: typeof AuthenticatedScreeningRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedResultRoute: AuthenticatedResultRoute,
+  AuthenticatedScreeningRoute: AuthenticatedScreeningRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  InsightsRoute: InsightsRoute,
-  ResultRoute: ResultRoute,
-  ScreeningRoute: ScreeningRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -5,19 +5,19 @@ import { predictThyroid, REFERENCE_RANGES, type PatientInput } from "@/ml/predic
 import { summariseSymptoms } from "@/ml/symptoms";
 import { saveScreening } from "@/lib/screening-session";
 
-export const Route = createFileRoute("/screening")({
+export const Route = createFileRoute("/_authenticated/screening")({
   head: () => ({
     meta: [
-      { title: "Patient screening form — ThyroCare AI" },
+      { title: "Patient screening — ThyroCare" },
       {
         name: "description",
         content:
           "Enter age, sex, thyroid lab values (TSH, T3, TT4, T4U, FTI) and a symptom description to get an educational thyroid pattern screening.",
       },
-      { property: "og:title", content: "Patient screening form — ThyroCare AI" },
+      { property: "og:title", content: "Patient screening — ThyroCare" },
       {
         property: "og:description",
-        content: "Enter thyroid test values and symptoms to run the ThyroCare AI screening model.",
+        content: "Enter thyroid test values, clinical history, and symptoms for screening.",
       },
     ],
   }),
@@ -57,56 +57,6 @@ const EMPTY: FormState = {
   sick: false,
   symptoms: "",
 };
-
-const SAMPLES: Array<{ name: string; note: string; data: FormState }> = [
-  {
-    name: "Sample A",
-    note: "High TSH, low T4",
-    data: {
-      ...EMPTY,
-      age: "46",
-      sex: "F",
-      tsh: "18.4",
-      t3: "1.1",
-      tt4: "52",
-      t4u: "0.95",
-      fti: "55",
-      symptoms:
-        "Very tired all day, gaining weight, feeling cold, constipation and dry skin for three months. No palpitations.",
-    },
-  },
-  {
-    name: "Sample B",
-    note: "Suppressed TSH, high T4",
-    data: {
-      ...EMPTY,
-      age: "31",
-      sex: "F",
-      tsh: "0.02",
-      t3: "4.8",
-      tt4: "182",
-      t4u: "1.05",
-      fti: "172",
-      symptoms:
-        "Losing weight without dieting, racing heart and palpitations, shaky hands, anxious, cannot sleep, sweating a lot.",
-    },
-  },
-  {
-    name: "Sample C",
-    note: "Values in range",
-    data: {
-      ...EMPTY,
-      age: "28",
-      sex: "M",
-      tsh: "1.6",
-      t3: "2.1",
-      tt4: "108",
-      t4u: "1.0",
-      fti: "106",
-      symptoms: "Occasional tiredness after night shifts, otherwise no complaints.",
-    },
-  },
-];
 
 const NUMERIC_FIELDS = [
   { key: "tsh", label: "TSH", unit: "mIU/L", ref: REFERENCE_RANGES.TSH, step: "0.01" },
@@ -194,38 +144,7 @@ export default function ScreeningPage() {
     <SiteShell>
       <div className="max-w-3xl">
         <h1 className="text-3xl font-semibold sm:text-4xl">Patient screening form</h1>
-        <p className="mt-3 text-muted-foreground">
-          Fill in whatever is available from the thyroid report. Blank lab fields are handled the
-          same way the training data was: filled with the dataset median and flagged as missing, so
-          the model knows the value was not measured.
-        </p>
-      </div>
-
-      <div className="mt-6 flex flex-wrap items-center gap-2">
-        <span className="text-sm font-semibold text-muted-foreground">Load an example:</span>
-        {SAMPLES.map((s) => (
-          <button
-            key={s.name}
-            type="button"
-            onClick={() => {
-              setForm(s.data);
-              setErrors([]);
-            }}
-            className="chip transition-colors hover:bg-secondary"
-          >
-            {s.name} · {s.note}
-          </button>
-        ))}
-        <button
-          type="button"
-          onClick={() => {
-            setForm(EMPTY);
-            setErrors([]);
-          }}
-          className="chip transition-colors hover:bg-secondary"
-        >
-          Clear
-        </button>
+         <p className="mt-3 text-muted-foreground">Enter patient information, thyroid tests, clinical history, and current symptoms.</p>
       </div>
 
       <form onSubmit={onSubmit} className="mt-6 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
