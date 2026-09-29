@@ -158,8 +158,8 @@ export function predictThyroid(input: PatientInput): Prediction {
         label: isMissingFlag
           ? `${FIELD_LABELS[base] ?? base} value missing`
           : (FIELD_LABELS[base] ?? base),
-        value: display[i],
-        effect: scaled[i] * coef[i][best],
+        value: display[i] ?? "",
+        effect: (scaled[i] ?? 0) * (coef[i]?.[best] ?? 0),
       };
     })
     .filter((c) => Math.abs(c.effect) > 0.02)
