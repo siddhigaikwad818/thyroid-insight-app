@@ -168,13 +168,13 @@ export function predictThyroid(input: PatientInput): Prediction {
 
   const probabilities = {} as Record<ClassName, number>;
   classes.forEach((c, i) => {
-    probabilities[c] = probs[i];
+    probabilities[c] = probs[i] ?? 0;
   });
 
   return {
-    predicted: classes[best],
+    predicted: classes[best] ?? "normal",
     probabilities,
-    confidence: probs[best],
+    confidence: probs[best] ?? 0,
     contributions,
     imputed,
   };
