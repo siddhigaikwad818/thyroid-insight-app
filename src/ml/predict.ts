@@ -108,9 +108,10 @@ export function predictThyroid(input: PatientInput): Prediction {
   for (const field of NUM) {
     const cleaned = clean(field, rawValue(input, field) as number | null);
     if (cleaned === null) imputed.push(FIELD_LABELS[field] ?? field);
-    const used = cleaned ?? medians[field];
+    const median = medians[field] ?? 1;
+    const used = cleaned ?? median;
     row.push(field === "age" ? used : Math.log(used));
-    display.push(cleaned === null ? `${medians[field]} (estimated)` : `${cleaned}`);
+    display.push(cleaned === null ? `${median} (estimated)` : `${cleaned}`);
   }
   for (const field of MISSING_FIELDS) {
     const cleaned = clean(field, rawValue(input, field) as number | null);
