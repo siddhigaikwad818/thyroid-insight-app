@@ -130,10 +130,13 @@ export function predictThyroid(input: PatientInput): Prediction {
   const intercept = model.intercept as number[];
   const classes = model.classes as ClassName[];
 
-  const scaled = row.map((v, i) => (v - mean[i]) / std[i]);
+  const scaled = row.map((v, i) => (v - (mean[i] ?? 0)) / (std[i] ?? 1));
   const logits = intercept.slice();
   for (let i = 0; i < scaled.length; i++) {
-    for (let k = 0; k < logits.length; k++) logits[k] += scaled[i] * coef[i][k];
+    const weights = coef[i] ?? [];
+    for (let k = 0; k < logits.length; k++) {
+      logits[k] = (logits[k] ?? 0) + (scaled[i] ?? 0) * (weights[k] ?? 0);
+    }
   }
   const max = Math.max(...logits);
   const exps = logits.map((z) => Math.exp(z - max));
