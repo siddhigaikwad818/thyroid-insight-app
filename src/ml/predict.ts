@@ -186,7 +186,7 @@ export const CLASS_LABELS: Record<ClassName, string> = {
   hyperthyroid: "Possible Hyperthyroidism",
 };
 
-export const REFERENCE_RANGES: Record<string, string> = {
+export const REFERENCE_RANGES = {
   TSH: "0.4 – 4.0 mIU/L",
   T3: "1.0 – 2.6 nmol/L",
   TT4: "60 – 140 nmol/L",
