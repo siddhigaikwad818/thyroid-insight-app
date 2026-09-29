@@ -145,7 +145,7 @@ export function predictThyroid(input: PatientInput): Prediction {
 
   let best = 0;
   probs.forEach((p, i) => {
-    if (p > probs[best]) best = i;
+    if (p > (probs[best] ?? 0)) best = i;
   });
 
   const featureNames = model.features as string[];
