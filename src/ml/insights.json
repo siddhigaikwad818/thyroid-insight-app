@@ -1,0 +1,214 @@
+{
+ "dataset": {
+  "name": "UCI Thyroid Disease (allhypo + allhyper, Garavan Institute)",
+  "url": "https://archive.ics.uci.edu/dataset/102/thyroid+disease",
+  "rawRows": 2800,
+  "usedRows": 2632,
+  "trainRows": 2105,
+  "testRows": 527,
+  "classCounts": {
+   "normal": 2342,
+   "hypothyroid": 220,
+   "hyperthyroid": 70
+  },
+  "missingByField": {
+   "age": 2,
+   "TSH": 123,
+   "T3": 444,
+   "TT4": 23,
+   "T4U": 136,
+   "FTI": 134
+  }
+ },
+ "model": {
+  "algorithm": "Multinomial logistic regression (softmax), L2 regularised, class-weighted",
+  "preprocessing": [
+   "Impossible values (age > 100, non-positive lab values) treated as missing",
+   "Missing lab values imputed with the training-set median plus a 'was missing' indicator",
+   "Lab values log-transformed (skewed distributions), then z-score standardised",
+   "Class weights applied because normal cases dominate the dataset"
+  ],
+  "featureCount": 20
+ },
+ "train": {
+  "accuracy": 0.9211,
+  "macroF1": 0.7743,
+  "confusionMatrix": [
+   [
+    1715,
+    81,
+    83
+   ],
+   [
+    2,
+    170,
+    0
+   ],
+   [
+    0,
+    0,
+    54
+   ]
+  ],
+  "perClass": [
+   {
+    "label": "normal",
+    "support": 1879,
+    "precision": 0.9988,
+    "recall": 0.9127,
+    "f1": 0.9538
+   },
+   {
+    "label": "hypothyroid",
+    "support": 172,
+    "precision": 0.6773,
+    "recall": 0.9884,
+    "f1": 0.8038
+   },
+   {
+    "label": "hyperthyroid",
+    "support": 54,
+    "precision": 0.3942,
+    "recall": 1.0,
+    "f1": 0.5654
+   }
+  ]
+ },
+ "test": {
+  "accuracy": 0.9127,
+  "macroF1": 0.7519,
+  "confusionMatrix": [
+   [
+    421,
+    20,
+    22
+   ],
+   [
+    0,
+    48,
+    0
+   ],
+   [
+    4,
+    0,
+    12
+   ]
+  ],
+  "perClass": [
+   {
+    "label": "normal",
+    "support": 463,
+    "precision": 0.9906,
+    "recall": 0.9093,
+    "f1": 0.9482
+   },
+   {
+    "label": "hypothyroid",
+    "support": 48,
+    "precision": 0.7059,
+    "recall": 1.0,
+    "f1": 0.8276
+   },
+   {
+    "label": "hyperthyroid",
+    "support": 16,
+    "precision": 0.3529,
+    "recall": 0.75,
+    "f1": 0.48
+   }
+  ]
+ },
+ "crossValidation": {
+  "folds": 5,
+  "macroF1": [
+   0.7446,
+   0.7297,
+   0.7413,
+   0.7548,
+   0.7509
+  ],
+  "meanMacroF1": 0.7443
+ },
+ "featureImportance": [
+  {
+   "feature": "log_TSH",
+   "weight": 2.7748
+  },
+  {
+   "feature": "log_TT4",
+   "weight": 1.7335
+  },
+  {
+   "feature": "log_FTI",
+   "weight": 1.411
+  },
+  {
+   "feature": "log_T3",
+   "weight": 0.8402
+  },
+  {
+   "feature": "log_T4U",
+   "weight": 0.7467
+  },
+  {
+   "feature": "on_thyroxine",
+   "weight": 0.606
+  },
+  {
+   "feature": "TSH_missing",
+   "weight": 0.4836
+  },
+  {
+   "feature": "thyroid_surgery",
+   "weight": 0.2679
+  },
+  {
+   "feature": "on_antithyroid_medication",
+   "weight": 0.2162
+  },
+  {
+   "feature": "age",
+   "weight": 0.2151
+  },
+  {
+   "feature": "T3_missing",
+   "weight": 0.2022
+  },
+  {
+   "feature": "FTI_missing",
+   "weight": 0.147
+  },
+  {
+   "feature": "T4U_missing",
+   "weight": 0.1446
+  },
+  {
+   "feature": "goitre",
+   "weight": 0.1136
+  },
+  {
+   "feature": "pregnant",
+   "weight": 0.0955
+  },
+  {
+   "feature": "query_hyperthyroid",
+   "weight": 0.0883
+  },
+  {
+   "feature": "sex",
+   "weight": 0.0783
+  },
+  {
+   "feature": "query_hypothyroid",
+   "weight": 0.0591
+  },
+  {
+   "feature": "sick",
+   "weight": 0.0383
+  },
+  {
+   "feature": "TT4_missing",
+   "weight": 0.0259
+  }
+ ]
+}
