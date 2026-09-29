@@ -143,9 +143,7 @@ export default function InsightsPage() {
                   <td className="py-2 font-semibold">{field}</td>
                   <td className="py-2 text-right">
                     {count} of {dataset.usedRows} ({((count / dataset.usedRows) * 100).toFixed(1)}%)
-                    — median {(model as never) && (insights as never) ? "" : ""}
-                    {(insights.model as never) ? "" : ""}
-                    {String((insights as unknown as { medians?: never }).medians ?? "")}
+                    — imputed with {(modelJson.medians as Record<string, number>)[field]}
                   </td>
                 </tr>
               ))}
