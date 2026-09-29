@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell, Disclaimer } from "@/components/site-shell";
 import insights from "@/ml/insights.json";
+import modelJson from "@/ml/model.json";
 import { CLASS_LABELS, type ClassName } from "@/ml/predict";
 
 export const Route = createFileRoute("/insights")({
