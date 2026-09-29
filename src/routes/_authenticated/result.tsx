@@ -4,7 +4,6 @@ import { SiteShell, Disclaimer } from "@/components/site-shell";
 import { CLASS_LABELS, REFERENCE_RANGES, type ClassName } from "@/ml/predict";
 import type { ExtractedSymptom } from "@/ml/symptoms";
 import { loadScreening, type ScreeningRecord } from "@/lib/screening-session";
-import insights from "@/ml/insights.json";
 
 export const Route = createFileRoute("/_authenticated/result")({
   head: () => ({
