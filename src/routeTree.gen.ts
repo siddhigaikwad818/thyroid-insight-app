@@ -10,63 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as InsightsRouteImport } from './routes/insights'
-import { Route as ResultRouteImport } from './routes/result'
-import { Route as ScreeningRouteImport } from './routes/screening'
+import { Route as AuthenticatedResultRouteImport } from './routes/_authenticated/result'
+import { Route as AuthenticatedScreeningRouteImport } from './routes/_authenticated/screening'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InsightsRoute = InsightsRouteImport.update({
-  id: '/insights',
-  path: '/insights',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResultRoute = ResultRouteImport.update({
-  id: '/result',
+const AuthenticatedResultRoute = AuthenticatedResultRouteImport.update({
+  id: '/_authenticated/result',
   path: '/result',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ScreeningRoute = ScreeningRouteImport.update({
-  id: '/screening',
+const AuthenticatedScreeningRoute = AuthenticatedScreeningRouteImport.update({
+  id: '/_authenticated/screening',
   path: '/screening',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/insights': typeof InsightsRoute
-  '/result': typeof ResultRoute
-  '/screening': typeof ScreeningRoute
+  '/result': typeof AuthenticatedResultRoute
+  '/screening': typeof AuthenticatedScreeningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/insights': typeof InsightsRoute
-  '/result': typeof ResultRoute
-  '/screening': typeof ScreeningRoute
+  '/result': typeof AuthenticatedResultRoute
+  '/screening': typeof AuthenticatedScreeningRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/insights': typeof InsightsRoute
-  '/result': typeof ResultRoute
-  '/screening': typeof ScreeningRoute
+  '/_authenticated/result': typeof AuthenticatedResultRoute
+  '/_authenticated/screening': typeof AuthenticatedScreeningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/insights' | '/result' | '/screening'
+  fullPaths: '/' | '/result' | '/screening'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/insights' | '/result' | '/screening'
-  id: '__root__' | '/' | '/insights' | '/result' | '/screening'
+  to: '/' | '/result' | '/screening'
+  id: '__root__' | '/' | '/_authenticated/result' | '/_authenticated/screening'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  InsightsRoute: typeof InsightsRoute
-  ResultRoute: typeof ResultRoute
-  ScreeningRoute: typeof ScreeningRoute
+  AuthenticatedResultRoute: typeof AuthenticatedResultRoute
+  AuthenticatedScreeningRoute: typeof AuthenticatedScreeningRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,25 +68,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/insights': {
-      id: '/insights'
-      path: '/insights'
-      fullPath: '/insights'
-      preLoaderRoute: typeof InsightsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/result': {
-      id: '/result'
+    '/_authenticated/result': {
+      id: '/_authenticated/result'
       path: '/result'
       fullPath: '/result'
-      preLoaderRoute: typeof ResultRouteImport
+      preLoaderRoute: typeof AuthenticatedResultRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/screening': {
-      id: '/screening'
+    '/_authenticated/screening': {
+      id: '/_authenticated/screening'
       path: '/screening'
       fullPath: '/screening'
-      preLoaderRoute: typeof ScreeningRouteImport
+      preLoaderRoute: typeof AuthenticatedScreeningRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -104,9 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  InsightsRoute: InsightsRoute,
-  ResultRoute: ResultRoute,
-  ScreeningRoute: ScreeningRoute,
+  AuthenticatedResultRoute: AuthenticatedResultRoute,
+  AuthenticatedScreeningRoute: AuthenticatedScreeningRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,7 +6,7 @@ import type { ExtractedSymptom } from "@/ml/symptoms";
 import { loadScreening, type ScreeningRecord } from "@/lib/screening-session";
 import insights from "@/ml/insights.json";
 
-export const Route = createFileRoute("/result")({
+export const Route = createFileRoute("/_authenticated/result")({
   head: () => ({
     meta: [
       { title: "Screening result — ThyroCare AI" },

@@ -5,7 +5,7 @@ import { predictThyroid, REFERENCE_RANGES, type PatientInput } from "@/ml/predic
 import { summariseSymptoms } from "@/ml/symptoms";
 import { saveScreening } from "@/lib/screening-session";
 
-export const Route = createFileRoute("/screening")({
+export const Route = createFileRoute("/_authenticated/screening")({
   head: () => ({
     meta: [
       { title: "Patient screening form — ThyroCare AI" },
